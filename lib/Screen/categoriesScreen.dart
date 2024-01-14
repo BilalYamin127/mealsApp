@@ -3,9 +3,11 @@ import 'package:meals_app/Widget/Category-Grid-Items.dart';
 import 'package:meals_app/data/dummy_data.dart';
 import 'package:meals_app/Screen/mealsScreen.dart';
 import 'package:meals_app/models/category.dart';
+import 'package:meals_app/models/meals.dart';
 
 class CategoriesScreen extends StatelessWidget {
-  const CategoriesScreen({super.key});
+  const CategoriesScreen({super.key, required this.OnfavriotButtonPressed});
+  final void Function (Meal meal) OnfavriotButtonPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -19,17 +21,13 @@ class CategoriesScreen extends StatelessWidget {
           builder: (ctx) =>  MealsScreen(
             title: category.title,
             meals: filteredMeals,
+            OnfavriotButtonPressed: OnfavriotButtonPressed,
           ),
         ),
       ); // Navigator.push(context, route)
     }
 
-    return Scaffold(
-      appBar: AppBar(
-
-        title: const Text('Pick Your Categories'),
-      ),
-      body: GridView(
+    return  GridView(
         padding: const EdgeInsets.all(24),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
@@ -48,7 +46,7 @@ class CategoriesScreen extends StatelessWidget {
               }
             )
         ],
-      ),
+
     );
   }
 }

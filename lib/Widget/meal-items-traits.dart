@@ -4,11 +4,11 @@ class MealItemTraits extends StatelessWidget {
   const MealItemTraits({
     super.key,
     required this.icon,
-    required this.lable,
+    required this.label,
   });
 
   final IconData icon;
-  final String lable;
+  final String label;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class MealItemTraits extends StatelessWidget {
         const SizedBox(
           width: 12,
         ),
-        Text(lable,
+        Text(label,
             style: const TextStyle(
               color: Colors.white,
             )),

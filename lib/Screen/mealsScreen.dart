@@ -1,13 +1,24 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:meals_app/Screen/meal-detailsScreen.dart';
 import 'package:meals_app/models/meals.dart';
 import 'package:meals_app/Widget/mealItems.dart';
 
-class MealsScreen extends StatelessWidget{
- const MealsScreen({super.key, required this.title,required this.meals});
-  final String title;
+class MealsScreen extends StatelessWidget {
+  const MealsScreen({super.key,  this.title,required this.OnfavriotButtonPressed, required this.meals});
+
+  final String? title;
   final List<Meal> meals;
+  final void Function (Meal meal) OnfavriotButtonPressed;
+
+  void selectedMeal(BuildContext context, Meal meal) {
+    Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (ctx) =>
+              MealDetailScreen(meal: meal, OnfavriotButtonPressed: OnfavriotButtonPressed ),
+        ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget content = Center(
@@ -16,15 +27,29 @@ class MealsScreen extends StatelessWidget{
         children: [
           Text(
             'Uh oh ... nothing here!',
-            style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-              color: Theme.of(context).colorScheme.onBackground,
+            style: Theme
+                .of(context)
+                .textTheme
+                .headlineLarge!
+                .copyWith(
+              color: Theme
+                  .of(context)
+                  .colorScheme
+                  .onBackground,
             ),
           ),
           const SizedBox(height: 16),
           Text(
             'Try selecting a different category!',
-            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-              color: Theme.of(context).colorScheme.onBackground,
+            style: Theme
+                .of(context)
+                .textTheme
+                .bodyLarge!
+                .copyWith(
+              color: Theme
+                  .of(context)
+                  .colorScheme
+                  .onBackground,
             ),
           ),
         ],
@@ -33,17 +58,23 @@ class MealsScreen extends StatelessWidget{
 
     if (meals.isNotEmpty) {
       content = ListView.builder(
-        itemCount: meals.length,
-        itemBuilder: (ctx, index) => MealItems(meal: meals[index])
+          itemCount: meals.length,
+          itemBuilder: (ctx, index) =>
+              MealItems(meal: meals[index], onSelectMeal:(meal) {
+                selectedMeal(context, meal);
+              },)
       );
     }
-   return Scaffold(
-     appBar: AppBar(
-       title: Text(title),
 
-     ),
-     body: content,
-   );
+    if (title == null ){
+      return content;
+    }
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(title!),
+      ),
+      body: content,
+    );
   }
 
 }
